@@ -24,7 +24,7 @@ provider "azurerm" {
 resource "azuread_group" "admins" {
   display_name     = "SEC-Admins"
   security_enabled = true
-  description      = "Privileged administrators - targeted by Conditional Access MFA policy"
+  description      = "Privileged administrators (CA001 targets the admin directory roles they hold)"
 }
 
 resource "azuread_group" "finance" {

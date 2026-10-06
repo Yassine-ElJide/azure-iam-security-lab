@@ -32,7 +32,7 @@ Doing this by hand in the portal is slow and not repeatable. The Terraform here 
 | Scenario | Policy | Expected result | Result |
 | --- | --- | --- | --- |
 | Block legacy authentication | CA: legacy auth clients → Block | Basic-auth sign-ins denied | _report-only, to validate_ |
-| Require MFA for admin roles | CA: directory roles → Require MFA | Admins prompted for MFA every sign-in | _report-only, to validate_ |
+| Require MFA for admin roles | CA: directory roles → Require MFA | Admins must complete MFA to sign in | _report-only, to validate_ |
 | Least privilege on a resource group | RBAC: Reader instead of Owner | User can view but not modify | _to validate_ |
 | Require compliant / managed device | CA: grant → require device (not in Terraform yet) | Sign-in from unmanaged device blocked | _planned_ |
 

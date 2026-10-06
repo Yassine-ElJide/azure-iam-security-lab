@@ -29,18 +29,14 @@ Doing this by hand in the portal is slow and not repeatable. The Terraform here 
 | [`terraform/README.md`](terraform/README.md) | How to run it safely (CA policies start in report-only) |
 
 ## Hardening scenarios
-| Scenario | Policy | Expected result | Result |
-| --- | --- | --- | --- |
-| Block legacy authentication | CA: legacy auth clients → Block | Basic-auth sign-ins denied | _report-only, to validate_ |
-| Require MFA for admin roles | CA: directory roles → Require MFA | Admins must complete MFA to sign in | _report-only, to validate_ |
-| Least privilege on a resource group | RBAC: Reader instead of Owner | User can view but not modify | _to validate_ |
-| Require compliant / managed device | CA: grant → require device (not in Terraform yet) | Sign-in from unmanaged device blocked | _planned_ |
+| Scenario | Policy | Expected result |
+| --- | --- | --- |
+| Block legacy authentication | CA: legacy auth clients → Block | Basic-auth sign-ins denied |
+| Require MFA for admin roles | CA: directory roles → Require MFA | Admins must complete MFA to sign in |
+| Least privilege on a resource group | RBAC: Reader instead of Owner | User can view but not modify |
 
 ## Rollout approach
 New CA policies are deployed in **report-only** first (`state = "enabledForReportingButNotEnforced"`), the sign-in logs reviewed for what *would* have been blocked, then switched to **on**. This is how you avoid locking yourself (or users) out.
-
-## Results
-<!-- TODO: screenshots of CA policies, sign-in logs showing MFA/report-only, RBAC assignment -->
 
 ## What I learned
 - The difference between Entra ID roles (control the directory) and Azure RBAC roles (control resources), a common point of confusion.

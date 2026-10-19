@@ -1,4 +1,6 @@
 terraform {
+  required_version = ">= 1.5"
+
   required_providers {
     azuread = {
       source  = "hashicorp/azuread"
@@ -20,13 +22,7 @@ provider "azurerm" {
   subscription_id = var.subscription_id
 }
 
-# --- Security groups (least-privilege building blocks) ---
-resource "azuread_group" "admins" {
-  display_name     = "SEC-Admins"
-  security_enabled = true
-  description      = "Privileged administrators (CA001 targets the admin directory roles they hold)"
-}
-
+# --- Security group (least-privilege building block) ---
 resource "azuread_group" "finance" {
   display_name     = "SEC-Finance-ReadOnly"
   security_enabled = true
@@ -36,7 +32,7 @@ resource "azuread_group" "finance" {
 # --- Example least-privilege RBAC assignment ---
 # Finance group gets Reader (not Contributor/Owner) on a resource group.
 data "azurerm_resource_group" "finance" {
-  name = "rg-finance-lab"
+  name = var.finance_resource_group_name
 }
 
 resource "azurerm_role_assignment" "finance_reader" {
